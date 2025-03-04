@@ -6,7 +6,7 @@ Pan sharpening aims at increasing spatial resolution of multispectral images whi
 
 The spatial resolution of a remote sensing system is the area of the ground captured by one pixel.
 
-The instantaneous field of view (IFOV) is the ground area sensed at a given instant of time.
+The instantaneous field of view (IFOV) is the ground area sensed at a given instant of time
 
 The reflectance is the ratio of the amount of light reflected by a surface to the amount of light incident to it.
 
