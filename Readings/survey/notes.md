@@ -36,3 +36,24 @@ For PANsharpening, at least geometric and radiometric corrections need to be per
 The data needs to be processed to a standard level and further pre processed for pan sharpening which may include registration, re sampling and histogram matching of MS and PAN images.
 
 ### II.1 Image registration
+
+Many applications of remote sensing image data require two or more scenes
+of the same geographical region, acquired at different dates or from different
+sensors, in order to be processed together. In this case, the role of image
+registration is to make the pixels in the two images precisely coincide to the
+same points on the ground.
+
+Two images can be registered to each other
+by registering each to a map coordinate base separately, or one image can be
+chosen as a master to which the other is to be registered 
+
+Due to the use of different sensors, this can be quite complicated, here are some problems image registration try to solve :
+
+- Feature absence or presence 
+- Contrast reversal (bright region might appear darker in another image)
+- Multiple intensity values in one image that need to be mapped to a single intensity value in the other
+- Considerably dissimilar images of the same scene produced by the image sensor when configured with different imaging parameters
+
+Two types of image registration methods : 
+- Area-based methods (Fourier methods, cross correlation, mutual information). Not well suited for the multisensor image registration problem
+- Feature-based methods, extract and match common features, more suitable. (Spatial relations, invariant descriptors, relaxation, pyramidal and wavelet decompositions)
