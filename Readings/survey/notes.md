@@ -84,19 +84,19 @@ help to reduce the spectral distortion in the pansharpened image
 
 
 
-### III. Gram Schimdt (GS)
+## III. Gram Schimdt (GS)
 
 Part of the Component Substituion family because it is using a linear transformation and substitution for some components in the transformed domain. 
 
 Algorithm : Component substitution pansharpening
 1. Upsample the MS image to the size of the PAN image.
 2. Forward transform the MS image to the desired components.
-3. Match the histogram of the PAN image with the Cl component to be substi-
+3. Match the histogram of the PAN image with the MS component to be substi-
 tuted.
-4. Replace the Cl component with the histogram-matched PAN image.
+4. Replace the MS component with the histogram-matched PAN image.
 5. Backward transform the components to obtain the pansharpened image
 
-CS methods are substituting a component of the transformed MS image with a component from the PAN image. These methods are meaningful only if these components contain the same spectral inforamtion. 
+CS methods are substituting a component of the transformed MS image with a component from the PAN image. These methods are meaningful only if these components contain the same spectral information. 
 
 Improper construction of the MS component introduce high spectral distortion. 
 
@@ -110,7 +110,7 @@ together to the MS image.
 
 To simulate this band, there are two methods :
 
-1) he LRMS bands are combined into a single lower resolution PAN (LR PAN) as the weighted mean of MS image. These weights depend on the spectral response of the MS bands and high resolution PAN (HR PAN) image and on the optical transmittance of the PAN band.
+1) The LRMS bands are combined into a single lower resolution PAN (LR PAN) as the weighted mean of MS image. These weights depend on the spectral response of the MS bands and high resolution PAN (HR PAN) image and on the optical transmittance of the PAN band.
 2) The second method simulates the LR PAN image by blurring and sub-sampling
 the observed PAN image
 
@@ -124,6 +124,83 @@ by using the full resolution PAN, while the forward transformation uses the
 low resolution approximation of PAN obtained by resampling the decimated
 PAN image provided by the user
 
-### IV. Quality Assessment
+## IV. Quality Assessment
+
+
+1. Any pansharpened image once downsampled to its original spatial reso-
+lution should be as similar as possible to the original image.
+2. Any pansharpened image should be as similar as possible to the image
+that a corresponding sensor would observe with the same high spatial
+resolution.
+3. The MS set of pansharpened images should be as similar as possible to
+the MS set of images that a corresponding sensor would observe with
+the same high spatial resolution.
+
+Consistency property : 1
+Synthesis property : 2 and 3
+
+The reference image is the MS image at the resolution of the PAN image.
+
+The consistency property is verified by downnsampling the fused image from the higher spatial resolution h to their original spatial resolution l using suitable filters.
+
+To verify the synthesis properties, the original PAN at resolution h and MS at resolution l are downsampled to their lower resolutions l and v respectively. Then, PAN at resolution l and MS at resolution v are fused to obtain fused MS at resolution l that can be then compared with the original MS image. The quality assessed at resolution l is assumed to be close to the quality at resolution h
+
+### IV.1 Visual Analysis
+
+Assess the global image quality (geometric shape, size of objects, spatial details, local contrast). 
+
+1) spectral preservation of features in each MS band where the appearance of the objects in the pansharpened images are analyzed in each band based on the
+appearance of the same objects in the original MS images
+2) multispectral synthesis in pansharpened images, where different color composites of the fused images are analyzed and compared with that of original images to verify that MS characteristics of objects at higher spatial resolution is similar to that in the original images
+3) synthesis of images close to actual images at high resolution as defined by the synthesis property of pansharpened images, that cannot be directly verified but can be analyzed from our knowledge of the spectra of objects present in the lower spatial resolutions.
+
+### IV.2 Quantitative Analysis
+
+#### Spectral Quality Assessment 
+
+To measure the spectral distortion due to
+the pansharpening process, each merged image is compared to the reference
+MS image : SAM, RM, CC, RMSE, SSIM
+
+1) Spectral Angle Mapper (SAM): SAM denotes the absolute value of the
+angle between two vectors, whose elements are the values of the pixels
+for the different bands of the HRMS image and the MS image at each image location.
+
+2) Relative-shift mean (RM): the percentage of variation between the mean of the reference image and the pansharpened image
+
+3) Correlation coefficient (CC): The CC between each band of the ref-
+erence and the pansharpened image indicates the spectral integrity of
+pansharpened image
+
+4) Root mean square error (RMSE): The RMSE between each band of the
+reference and the pansharpened image measures the changes in radiance
+of the pixel values
+
+5) Structure Similarity Index (SSIM): a perceptual measure that combines several factors related to the way humans perceive the quality of the images.
+
+
+While these parameters only evaluate the difference in spectral informa-
+tion between each band of the merged and the reference image, in order
+to estimate the global spectral quality of the merged images the following
+parameters are used : ERGAS, MSSIM
+
+1)  Erreur relative globale adimensionnelle de synth ́ese (ERGAS) index: a global quality index sensitive to mean shifting and dynamic
+range change
+
+2) Mean SSIM (MSSIM) index and the average quality index (Qavg):  are used to evaluate the overall image SSIM by averaging
+
+
+#### Spatial Quality Assessment 
+
+To assess the spatial quality of a pansharp-
+ened image, its spatial detail information must be compared to the that
+present in the reference HR MS image.
+
+Looks kind of fuzzy. Several authors proposed several methods, it doesn't seem to be some agreement on standard methds (from what I have udnerstood)
+
+
+### Quality Assessment without a reference
+
+Will come back to it in case I need it 
 
 
