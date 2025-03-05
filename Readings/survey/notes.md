@@ -57,3 +57,73 @@ Due to the use of different sensors, this can be quite complicated, here are som
 Two types of image registration methods : 
 - Area-based methods (Fourier methods, cross correlation, mutual information). Not well suited for the multisensor image registration problem
 - Feature-based methods, extract and match common features, more suitable. (Spatial relations, invariant descriptors, relaxation, pyramidal and wavelet decompositions)
+
+### II.2 Image up-sampling and interpolation
+
+When the registered remote sensing image is too coarse and does not meet
+the required resolution, up-sampling may be needed to obtain a higher res-
+olution version of the image. 
+
+The up-sampling process may involve interpolation, usually performed via convolution of the image with an interpolation kernel 
+
+Methods that can be used for remote sensing images: 
+
+- Bilinear interpolation (creates a new pixel in the target image from a weighted average of its 4 nearest neighboring pixels in the source image)
+- Interpolation with smoothing filter (weighted average of the pixels contained in the area spanned by the filter mask)
+- Interpolation with sharpening filter (enhances details that have been blurred). This method can create aliasing. Solution : Interpolation with unsharp masking
+
+### II.3 Histogram matching
+
+Some pansharpening algorithms assume that the spectral characteristics of
+the PAN image match those of each band of the MS image or match those
+of a transformed image based on the MS image, which is not always the case. 
+
+Matching the histograms of the PAN image and MS bands
+will minimize brightness mismatching during the fusion process, which may
+help to reduce the spectral distortion in the pansharpened image
+
+
+
+### III. Gram Schimdt (GS)
+
+Part of the Component Substituion family because it is using a linear transformation and substitution for some components in the transformed domain. 
+
+Algorithm : Component substitution pansharpening
+1. Upsample the MS image to the size of the PAN image.
+2. Forward transform the MS image to the desired components.
+3. Match the histogram of the PAN image with the Cl component to be substi-
+tuted.
+4. Replace the Cl component with the histogram-matched PAN image.
+5. Backward transform the components to obtain the pansharpened image
+
+CS methods are substituting a component of the transformed MS image with a component from the PAN image. These methods are meaningful only if these components contain the same spectral inforamtion. 
+
+Improper construction of the MS component introduce high spectral distortion. 
+
+Easy to implement and results in good geometrical quality. Does not take into account dissimilarities between PAN and MS, highly depends on correlation between bands. 
+
+GS is used to orthogonalize matrix data or bands of a digital image removing redundant (i.e., correlated) information that is contained in multiple bands. It has been modified for PANSharpening : the mean of each band is subtracted from each pixel in the band before the orthogonalization is performed to produce a more accurate outcome
+
+In GS-based pansharpening, a lower resolution PAN band needs to be
+simulated and used as the first band of the input to the GS transformation,
+together to the MS image.
+
+To simulate this band, there are two methods :
+
+1) he LRMS bands are combined into a single lower resolution PAN (LR PAN) as the weighted mean of MS image. These weights depend on the spectral response of the MS bands and high resolution PAN (HR PAN) image and on the optical transmittance of the PAN band.
+2) The second method simulates the LR PAN image by blurring and sub-sampling
+the observed PAN image
+
+Comparison : Method 1 exhibits outstanding spatial quality, but spectral distortions may occur. This distortion is due to the fact
+that the average of the MS spectral bands is not likely to have the same
+radiometry as the PAN image. The second method is unaffected by spectral
+distortion but generally suffers from a lower sharpness and spatial enhance-
+ment. This is due to the injection mechanism of high-pass details taken from
+PAN, which is embedded into the inverse GS transformation, carried out
+by using the full resolution PAN, while the forward transformation uses the
+low resolution approximation of PAN obtained by resampling the decimated
+PAN image provided by the user
+
+### IV. Quality Assessment
+
+
