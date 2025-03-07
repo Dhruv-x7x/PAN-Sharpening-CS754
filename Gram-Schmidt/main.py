@@ -1,4 +1,6 @@
 from src.preprocessing import read_band, resample_band, load_bands, resample_ms_to_pan
+from src.gram_schmidt import pansharpen_gs
+import numpy as np
 
 def main():
     # Test load_bands function
@@ -24,6 +26,14 @@ def main():
     for i in range(resampled_ms_array.shape[0]):
         print(f"Resampled multispectral band {i+1} shape: {resampled_ms_array[i].shape}")
     
+    # Test Gram-Schmidt pansharpening
+    print("\nTesting Gram-Schmidt pansharpening:")
+    sharpened_ms = pansharpen_gs(resampled_ms_array, pan)
+    print(f"Sharpened multispectral image shape: {sharpened_ms.shape}")
+    
+    # stats
+    for i in range(sharpened_ms.shape[0]):
+        print(f"Sharpened band {i+1} - Mean: {np.mean(sharpened_ms[i]):.2f}, Std: {np.std(sharpened_ms[i]):.2f}")
    
 if __name__ == "__main__":
     main()
