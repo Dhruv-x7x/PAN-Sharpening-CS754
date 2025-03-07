@@ -1,4 +1,4 @@
-from src.preprocessing import read_band, resample_band, load_bands
+from src.preprocessing import read_band, resample_band, load_bands, resample_ms_to_pan
 
 def main():
     # Test load_bands function
@@ -16,29 +16,14 @@ def main():
     for i, (band, meta) in enumerate(zip(ms_list, ms_meta_list)):
         print(f"Multispectral band {i+1} shape: {band.shape}")
     
-    # Testing resampling
-    print("\nTesting resampling:")
-    # Read band 8 (panchromatic band)
-    pan_filepath = "data/LC08_L1TP_B8.tiff"
-    pan_band, pan_meta = read_band(pan_filepath)
+    # Testing resampling using resample_ms_to_pan function
+    print("\nTesting resampling using resample_ms_to_pan function:")
+    resampled_ms_array = resample_ms_to_pan(ms_list, ms_meta_list, pan.shape, pan_meta)
     
-    # Read band 4 (red band) as an example of multispectral band
-    ms_filepath = "data/LC08_L1TP_B4.tiff"
-    ms_band, ms_meta = read_band(ms_filepath)
+    # Print shapes of resampled bands
+    for i in range(resampled_ms_array.shape[0]):
+        print(f"Resampled multispectral band {i+1} shape: {resampled_ms_array[i].shape}")
     
-    print(f"Panchromatic band shape: {pan_band.shape}")
-    print(f"Multispectral band shape: {ms_band.shape}")
-    
-    # Resample multispectral band to match panchromatic resolution
-    resampled_ms = resample_band(
-        ms_band,
-        ms_meta,
-        target_shape=pan_band.shape,
-        target_transform=pan_meta['transform'],
-        target_crs=pan_meta['crs']
-    )
-    
-    print(f"Resampled multispectral band shape: {resampled_ms.shape}")
    
 if __name__ == "__main__":
     main()
