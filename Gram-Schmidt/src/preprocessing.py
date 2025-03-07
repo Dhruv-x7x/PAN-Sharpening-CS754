@@ -49,12 +49,13 @@ def resample_ms_to_pan(ms_list, ms_meta_list, pan_shape, pan_meta):
         numpy.ndarray: Array of resampled multispectral bands.
     """
     resampled_ms = []
-    for band, meta in zip(ms_list, ms_meta_list):
+    for i, (band, meta) in enumerate(zip(ms_list, ms_meta_list)):
         if band.shape != pan_shape:
-            print("Resampling a multispectral band to match panchromatic resolution.")
+            print(f"Resampling band {i+1} from shape {band.shape} to match panchromatic resolution {pan_shape}")
             band_resampled = resample_band(band, meta, pan_shape, pan_meta['transform'], pan_meta['crs'])
         else:
             band_resampled = band
+            print(f"Band {i+1} already matches panchromatic resolution")
         resampled_ms.append(band_resampled)
     return np.array(resampled_ms)
 
@@ -83,10 +84,14 @@ def load_bands(data_folder):
 
     ms_list = [blue, green, red]
     ms_meta_list = [blue_meta, green_meta, red_meta]
+    band_names = ['Blue', 'Green', 'Red']
 
     if bands['B5']:  # Optional NIR band
         nir, nir_meta = read_band(bands['B5'][0])
         ms_list.append(nir)
         ms_meta_list.append(nir_meta)
+        band_names.append('NIR')
+        print("NIR band loaded successfully.")
 
+    print("Loaded multispectral bands:", band_names)
     return ms_list, ms_meta_list, pan, pan_meta
