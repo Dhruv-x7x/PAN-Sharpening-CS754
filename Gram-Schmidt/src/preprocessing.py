@@ -37,6 +37,27 @@ def resample_band(band, src_meta, target_shape, target_transform, target_crs):
     )
     return dst_band
 
+def resample_ms_to_pan(ms_list, ms_meta_list, pan_shape, pan_meta):
+    """
+    Resamples each multispectral band to the panchromatic resolution if needed.
+    Args:
+        ms_list (list): List of multispectral bands.
+        ms_meta_list (list): List of metadata for each multispectral band.
+        pan_shape (tuple): Shape of the panchromatic band.
+        pan_meta (dict): Metadata of the panchromatic band.
+    Returns:
+        numpy.ndarray: Array of resampled multispectral bands.
+    """
+    resampled_ms = []
+    for band, meta in zip(ms_list, ms_meta_list):
+        if band.shape != pan_shape:
+            print("Resampling a multispectral band to match panchromatic resolution.")
+            band_resampled = resample_band(band, meta, pan_shape, pan_meta['transform'], pan_meta['crs'])
+        else:
+            band_resampled = band
+        resampled_ms.append(band_resampled)
+    return np.array(resampled_ms)
+
 def load_bands(data_folder):
     """Loads multispectral and panchromatic bands from the given folder."""
     all_tiff_files = glob.glob(os.path.join(data_folder, "*.tif")) + glob.glob(os.path.join(data_folder, "*.tiff"))
