@@ -11,6 +11,8 @@ def read_band(filepath):
     print(f"Reading {filepath}")
     with rasterio.open(filepath) as src:
         band = src.read(1)  # reading the first band
+        print(f"Raw band data: {band}")
+        print(f"Band stats - Min: {np.min(band)}, Max: {np.max(band)}, Mean: {np.mean(band)}")
         meta = src.meta
     return band, meta
 
@@ -70,18 +72,25 @@ def load_bands(data_folder):
     }
     bands = {name: [f for f in all_tiff_files if identifier in f] for name, identifier in band_map.items()}
 
+    print(f"All TIFF files found: {all_tiff_files}")
+    print(f"Band mapping: {bands}")
+    print(f"Required bands: {'B2', 'B3', 'B4', 'B8'}")
+
     # Ensure required bands exist
     required_bands = ['B2', 'B3', 'B4', 'B8']
     for band in required_bands:
         if not bands[band]:
             print(f"ERROR: {band} band not found!")
             return None
+    print("All required bands found.")
 
     # Read required bands
     blue, blue_meta = read_band(bands['B2'][0])
     green, green_meta = read_band(bands['B3'][0])
     red, red_meta = read_band(bands['B4'][0])
     pan, pan_meta = read_band(bands['B8'][0])
+
+    print(f"Blue band shape: {blue.shape}, Green band shape: {green.shape}, Red band shape: {red.shape}, Panchromatic band shape: {pan.shape}")
 
     ms_list = [blue, green, red]
     ms_meta_list = [blue_meta, green_meta, red_meta]

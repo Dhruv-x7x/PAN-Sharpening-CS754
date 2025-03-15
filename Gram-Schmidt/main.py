@@ -66,5 +66,8 @@ def main():
     # Print statistics after downsampling
     print_image_stats(downsampled_sharpened, "After downsampling", is_3d=True)
    
+    # Print statistics for the adjusted panchromatic image
+    print(f"Pan Adjusted stats - Min: {np.min(pan)}, Max: {np.max(pan)}, Mean: {np.mean(pan)}")
+    
 if __name__ == "__main__":
     main()
