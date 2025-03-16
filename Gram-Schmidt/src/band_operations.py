@@ -116,3 +116,52 @@ def downsample_image(image, target_shape):
     """
     # cv2.resize expects size as (width, height)
     return cv2.resize(image, (target_shape[1], target_shape[0]), interpolation=cv2.INTER_AREA) # resamples pixel values using area relations by averaging neighboring pixels
+
+def match_histograms(source, reference, strength=0.5):
+    """Match the histogram of source to reference with a controllable strength parameter.
+    
+    Args:
+        source (numpy.ndarray): The source image to modify [nb_bands, h, w]
+        reference (numpy.ndarray): The reference image [nb_bands, h, w]
+        strength (float): Controls the strength of histogram matching (0.0 to 1.0)
+                         0.0 = no change, 1.0 = full histogram matching
+        
+    Returns:
+        numpy.ndarray: Image with histogram matched to reference
+    """
+    print(f"Matching histograms between source and reference images (strength={strength})...")
+    matched = np.zeros_like(source)
+    
+    for i in range(source.shape[0]):
+        # Sort the values of source and reference
+        source_values = source[i].flatten()
+        reference_values = reference[i].flatten()
+        
+        source_sorted = np.sort(source_values)
+        reference_sorted = np.sort(reference_values)
+        
+        # Create a mapping from source to reference
+        source_quantiles = np.linspace(0, 1, len(source_sorted))
+        reference_quantiles = np.linspace(0, 1, len(reference_sorted))
+        
+        # Interpolate reference values at source quantiles
+        interp_values = np.interp(source_quantiles, reference_quantiles, reference_sorted)
+        
+        # Create a lookup table
+        idx = np.argsort(source_sorted)
+        source_ranks = np.zeros_like(idx)
+        source_ranks[idx] = np.arange(len(source_sorted))
+        
+        # Apply the mapping with strength control
+        if strength < 1.0:
+            # Blend between original and matched values
+            matched_values = interp_values[source_ranks.reshape(source[i].shape)]
+            matched[i] = (1 - strength) * source[i] + strength * matched_values
+        else:
+            # Full histogram matching
+            matched[i] = interp_values[source_ranks.reshape(source[i].shape)]
+        
+        print(f"  - Band {i+1} histogram matched - Min: {np.min(matched[i]):.2f}, Max: {np.max(matched[i]):.2f}, Mean: {np.mean(matched[i]):.2f}")
+    
+    print("Histogram matching completed.")
+    return matched

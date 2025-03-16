@@ -1,6 +1,7 @@
-from src.band_operations import read_band, resample_band, load_bands, resample_ms_to_pan, downsample_image
+from src.band_operations import read_band, resample_band, load_bands, resample_ms_to_pan, downsample_image, match_histograms
 from src.gram_schmidt import pansharpen_gs
 import numpy as np
+from src.evaluation import evaluate_pansharpening, print_metrics, evaluate_and_save_pansharpening
 
 def print_image_stats(image, name, is_3d=False):
     print(f"\n{name}:")
@@ -66,8 +67,32 @@ def main():
     # Print statistics after downsampling
     print_image_stats(downsampled_sharpened, "After downsampling", is_3d=True)
    
-    # Print statistics for the adjusted panchromatic image
-    print(f"Pan Adjusted stats - Min: {np.min(pan)}, Max: {np.max(pan)}, Mean: {np.mean(pan)}")
+    # Create original MS array for evaluation
+    original_ms_array = np.array(ms_list)
     
+    
+    # Apply histogram matching before evaluation with a gentle strength
+    print("\nApplying gentle histogram matching to align intensity distributions...")
+    downsampled_sharpened_matched = match_histograms(downsampled_sharpened, original_ms_array, strength=0.3)
+    
+    # Evaluate the pansharpening results at original MS resolution
+    print("\nEvaluating pansharpening results:")
+    # Calculate resolution ratio considering both dimensions for non-square pixels
+    height_ratio = pan.shape[0] / original_ms_shape[0]
+    width_ratio = pan.shape[1] / original_ms_shape[1]
+    ratio = (height_ratio + width_ratio) / 2  # Average ratio for evaluation
+    print(f"Resolution ratio for evaluation: {ratio:.2f} (Height: {height_ratio:.2f}, Width: {width_ratio:.2f})")
+    
+    # Run the evaluation and save the results to a file
+    print("\nRunning evaluation and saving results to file:")
+    # Evaluate both with and without histogram matching
+    print("\nEvaluating without histogram matching:")
+    evaluate_and_save_pansharpening(downsampled_sharpened, original_ms_array, ratio=ratio, 
+                                   filename='pansharpening_results_no_matching.txt')
+    
+    print("\nEvaluating with histogram matching:")
+    evaluate_and_save_pansharpening(downsampled_sharpened_matched, original_ms_array, ratio=ratio,
+                                   filename='pansharpening_results.txt')
+   
 if __name__ == "__main__":
     main()

@@ -6,7 +6,7 @@ def pansharpen_gs(ms, pan, weights=None):
     
     ms: 3D numpy array of shape (bands, H, W) for multispectral data.
     pan: 2D numpy array (H, W) for the high-resolution panchromatic band.
-    weights: List or array of weights to compute the synthetic pan; if None, equal weights are used.
+    weights: List or array of weights to compute the synthetic pan; if None, weights are estimated from correlation.
 
     Note : MS and PAN should have the same shape (already upsampled)
 
@@ -18,12 +18,28 @@ def pansharpen_gs(ms, pan, weights=None):
     """
 
     print("Starting Gram-Schmidt pansharpening...")
+    
+    # If weights are not provided, estimate them based on correlation with PAN
     if weights is None:
-        weights = np.ones(ms.shape[0]) / ms.shape[0] #equal weights for all the bands if not predefined weights are provided
+        # Estimate weights based on correlation between each MS band and the PAN band
+        weights = np.zeros(ms.shape[0])
+        for i in range(ms.shape[0]):
+            # Calculate correlation between MS band and PAN
+            corr = np.corrcoef(ms[i].flatten(), pan.flatten())[0, 1]
+            # Use absolute correlation as weight (higher correlation = higher weight)
+            weights[i] = abs(corr)
+        
+        # Normalize weights to sum to 1
+        if np.sum(weights) > 0:
+            weights = weights / np.sum(weights)
+        else:
+            # Fallback to equal weights if correlations are all zero
+            weights = np.ones(ms.shape[0]) / ms.shape[0]
+    
+    print("Weights used for synthetic panchromatic image:", weights)
     
     # Compute a synthetic panchromatic image as a weighted sum of the multispectral bands.
     pan_synth = np.tensordot(weights, ms, axes=(0, 0))
-    print("Weights used for synthetic panchromatic image:", weights)
     print("Synthetic panchromatic image computed:", pan_synth)
     print("Synthetic panchromatic image stats - Min:", np.min(pan_synth), "Max:", np.max(pan_synth), "Mean:", np.mean(pan_synth))
     print("Synthetic panchromatic image computed.")
@@ -59,7 +75,14 @@ def pansharpen_gs(ms, pan, weights=None):
         if var_synth == 0:
             var_synth = 1e-10
         gain = covar / var_synth # This determines how much of the panchromatic image should be used to enhance the MS band
-        print(f"Band {i+1} - Gain: {gain}, Covariance: {covar}, Variance: {var_synth}")
+        
+        # Limit the gain to prevent excessive enhancement but allow more flexibility
+        # Use a more adaptive approach based on the band's correlation with PAN
+        corr = np.corrcoef(ms_band.flatten(), pan.flatten())[0, 1]
+        max_gain = 5.0 if abs(corr) > 0.5 else 3.0  # Higher limit for strongly correlated bands
+        gain = np.clip(gain, -max_gain, max_gain)  # Allow negative gains but limit magnitude
+        
+        print(f"Band {i+1} - Gain: {gain}, Covariance: {covar}, Variance: {var_synth}, Correlation with PAN: {corr}")
         print(f"Band {i+1} - Covariance: {covar}, Variance: {var_synth}, Gain: {gain}")
         print(f"pan_adjusted: {pan_adjusted}")
         print(f"pan_synth: {pan_synth}")
