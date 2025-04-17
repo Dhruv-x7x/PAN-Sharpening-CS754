@@ -1,8 +1,8 @@
-# Breakdown of the Project
+# Pan-Sharpening Project
 
-## Introduction 
+## Introduction
 
-In this project, we aim to learn **pan-sharpening** and implement it using selected methods commonly used in the field.
+This project explores **pan-sharpening** techniques using Landsat 8 satellite imagery. We implement and evaluate selected methods to enhance the spatial resolution of multispectral images using a higher-resolution panchromatic band.
 
 ## Research Papers
 
@@ -10,11 +10,10 @@ To gain an initial understanding of the topic, we reviewed and summarized key po
 **"A survey of classical methods and new trends in pansharpening of multispectral images"**.  
 This paper, along with our notes, can be found in the folder **`readings/survey/`**. Some notes are direct excerpts from the paper itself.
 
-## Dataset  
+## Dataset
 
-### **Source of the Dataset**  
-The dataset used in this project consists of **Landsat 8** images, obtained from:  
- **[USGS Earth Explorer](https://earthexplorer.usgs.gov/)**  
+### Source
+**Landsat 8** images from **[USGS Earth Explorer](https://earthexplorer.usgs.gov/)** (Landsat Collection 2 Level-1).
 
 We specifically selected **Landsat Collection 2 Level-1 (L1TP) GeoTIFF products**, as they provide the best radiometric and geometric corrections for analysis.
 
@@ -43,6 +42,11 @@ The area chosen for this project is **Tokyo**, as it provides:
 - **High urban detail** (roads, buildings, bridges).
 - **Green areas** like vegetation and mountains.
 
+### **Implemented Methods**
+
+Currently, the following pan-sharpening method is implemented:
+
+-   **Gram-Schmidt:** See the `Gram-Schmidt/` directory for implementation details and results.
 ---
 
 

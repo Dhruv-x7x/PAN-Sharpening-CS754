@@ -27,7 +27,7 @@ ENV/
 env/
 
 # Data and Image files
-data/
+/data/
 *.tif
 *.tiff
 *.png
