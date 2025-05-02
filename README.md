@@ -44,9 +44,10 @@ The area chosen for this project is **Tokyo**, as it provides:
 
 ### **Implemented Methods**
 
-Currently, the following pan-sharpening method is implemented:
+Currently, the following pan-sharpening methods are implemented:
 
 -   **Gram-Schmidt:** See the `Gram-Schmidt/` directory for implementation details and results.
+-   **High Pass Filtering :** See the `High Pass Filtering/` directory for implementation details and results.
 ---
 
 
