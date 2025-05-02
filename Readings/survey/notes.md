@@ -269,15 +269,15 @@ for the different bands of the HRMS image and the MS image at each image locatio
 
 2) Relative-shift mean (RM): the percentage of variation between the mean of the reference image and the pansharpened image
 
-3) Correlation coefficient (CC): The CC between each band of the ref-
-erence and the pansharpened image indicates the spectral integrity of
+3) Correlation coefficient (CC): The CC between each band of the reference
+    and the pansharpened image indicates the spectral integrity of
 pansharpened image
 
-4) Root mean square error (RMSE): The RMSE between each band of the
+5) Root mean square error (RMSE): The RMSE between each band of the
 reference and the pansharpened image measures the changes in radiance
 of the pixel values
 
-5) Structure Similarity Index (SSIM): a perceptual measure that combines several factors related to the way humans perceive the quality of the images.
+6) Structure Similarity Index (SSIM): a perceptual measure that combines several factors related to the way humans perceive the quality of the images.
 
 
 While these parameters only evaluate the difference in spectral informa-
@@ -292,11 +292,10 @@ range change
 
 #### Spatial Quality Assessment 
 
-To assess the spatial quality of a pansharp-
-ened image, its spatial detail information must be compared to the that
+To assess the spatial quality of a pansharpened image, its spatial detail information must be compared to the that
 present in the reference HR MS image.
 
-Looks kind of fuzzy. Several authors proposed several methods, it doesn't seem to be some agreement on standard methds (from what I have udnerstood)
+Looks kind of fuzzy. Several authors proposed several methods, it doesn't seem to be some agreement on standard methds (from what I have understood)
 
 ### Quality Assessment without a reference
 
