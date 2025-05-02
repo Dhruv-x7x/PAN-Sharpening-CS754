@@ -8,10 +8,11 @@ This project explores **pan-sharpening** techniques using Landsat 8 satellite im
 
 To gain an initial understanding of the topic, we reviewed and summarized key points from the paper titled:
 [1] **"A survey of classical methods and new trends in pansharpening of multispectral images"**.  
-This paper, along with our notes, can be found in the folder **`readings/survey/`**. Some notes are direct excerpts from the paper itself.
 
 Implementation of Bayesian methods required reading an additional paper because the summary provided in [1] was insufficient. We referenced the paper titled:
 [2] **"Variational posterior distribution approximation in Bayesian super resolution reconstruction of multispectral images"**
+
+These papers, along with our notes, can be found in the folder **`readings/survey/`**. Some notes are direct excerpts from the papers themselves.
 
 ## Dataset
 
