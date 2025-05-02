@@ -1,4 +1,4 @@
-# Pan-Sharpening Project
+# Pan-Sharpening of Multi-Spectral Images
 
 ## Introduction
 
@@ -7,8 +7,12 @@ This project explores **pan-sharpening** techniques using Landsat 8 satellite im
 ## Research Papers
 
 To gain an initial understanding of the topic, we reviewed and summarized key points from the paper titled:
-**"A survey of classical methods and new trends in pansharpening of multispectral images"**.  
-This paper, along with our notes, can be found in the folder **`readings/survey/`**. Some notes are direct excerpts from the paper itself.
+[1] **"A survey of classical methods and new trends in pansharpening of multispectral images"**.  
+
+Implementation of Bayesian methods required reading an additional paper because the summary provided in [1] was insufficient. We referenced the paper titled:
+[2] **"Variational posterior distribution approximation in Bayesian super resolution reconstruction of multispectral images"**
+
+These papers, along with our notes, can be found in the folder **`readings/survey/`**. Some notes are direct excerpts from the papers themselves.
 
 ## Dataset
 
@@ -47,7 +51,8 @@ The area chosen for this project is **Tokyo**, as it provides:
 Currently, the following pan-sharpening methods are implemented:
 
 -   **Gram-Schmidt:** See the `Gram-Schmidt/` directory for implementation details and results.
--   **High Pass Filtering :** See the `High Pass Filtering/` directory for implementation details and results.
+-   **High Pass Filtering**: See the `High Pass Filtering/` directory for implementation details and results.
+-   **Bayesian Methods: MAP Estimation via SAR prior**: See the `Bayesian_methods/` directory for implementation details and results.
 ---
 
 
