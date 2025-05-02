@@ -1,4 +1,4 @@
-# Pan-Sharpening Project
+# Pan-Sharpening of Multi-Spectral Images
 
 ## Introduction
 
