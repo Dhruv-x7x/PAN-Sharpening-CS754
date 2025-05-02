@@ -224,6 +224,8 @@ So we can write the overall objective function as minimizing,
 
 $$\mathcal{L}(z) = \frac{\beta}{2}\|y - Hz\|^2 + \frac{1}{2\sigma^2}\|x - Gz\|^2 + \sum_{b}\frac{\alpha_b}{2}\|Cz_b\|^2$$
 
+Similar objective function was used by Mateos et. al. in [2].
+
 ## IV. Quality Assessment
 
 1. Any pansharpened image once downsampled to its original spatial reso-
