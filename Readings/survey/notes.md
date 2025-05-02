@@ -174,9 +174,9 @@ p(z) = \prod_{b=1}^{B} p(z_b) \propto \prod_{b=1}^{B} \exp\left(-\frac{1}{2} \al
 $$
 
 where:
-- $z_b$: band $b$ of HRMS image
-- $C$: Laplacian operator which detects edges (2nd order spatial variations)
-- $\alpha_b$: Inverse of variance, controls smoothing. 
+  - $z_b$: band $b$ of HRMS image
+  - $C$: Laplacian operator which detects edges (2nd order spatial variations)
+  - $\alpha_b$: Inverse of variance, controls smoothing. 
 
 Big changes such as sharp edges are penalized.
 
