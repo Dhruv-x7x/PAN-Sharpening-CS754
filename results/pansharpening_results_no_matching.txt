@@ -1,13 +1,27 @@
 === Pansharpening Evaluation Results ===
+--------------------------------------------
+          Gram-Schmidt Method Results
+--------------------------------------------
+    --- Spatial Metrics ---
+    Correlation Coefficient (CC): 0.9923 (higher is better)
+    Peak Signal-to-Noise Ratio (PSNR): 36.9582 dB (higher is better)
+    Structural Similarity Index (SSIM): 0.9442 (higher is better)
+    Mean Absolute Error (MAE): 0.0097 (lower is better)
+    Root Mean Square Error (RMSE): 0.0142 (lower is better)
+    
+    --- Spectral Metrics ---
+    Spectral Angle Mapper (SAM) in radians: 0.5226 radians (lower is better)
+    Spectral Angle Mapper (SAM) in degrees: 29.9439 degrees (lower is better)
+    ERGAS: 23.2893 (lower is better)
 
---- Spatial Metrics ---
-Correlation Coefficient (CC): 0.9923 (higher is better)
-Peak Signal-to-Noise Ratio (PSNR): 36.9582 dB (higher is better)
-Structural Similarity Index (SSIM): 0.9442 (higher is better)
-Mean Absolute Error (MAE): 0.0097 (lower is better)
-Root Mean Square Error (RMSE): 0.0142 (lower is better)
-
---- Spectral Metrics ---
-Spectral Angle Mapper (SAM) in radians: 0.5226 radians (lower is better)
-Spectral Angle Mapper (SAM) in degrees: 29.9439 degrees (lower is better)
-ERGAS: 23.2893 (lower is better)
+------------------------------------------------
+            HPF Method Results
+------------------------------------------------
+    --- Spatial Metrics ---
+    Peak Signal-to-Noise Ratio (PSNR): 34.4001 dB (higher is better)
+    Root Mean Square Error (RMSE): 0.12448 (lower is better)
+    
+    --- Spectral Metrics ---
+    Spectral Angle Mapper (SAM) in radians:  0.010222357 radians (lower is better)
+    Spectral Angle Mapper (SAM) in degrees: 0.5856979 degrees (lower is better)
+    ERGAS: 50.987598612105934 (lower is better)
